@@ -20,6 +20,8 @@ static Node genNode() {
             lparen.name = "(";
             node.nodes.push_back(lparen);
 
+            parserIdx++;
+
             while (parserIdx < tkns.size() - 1 && tkns[parserIdx].name != "$T_RPAREN") {
                 Node param;
                 param.name = tkns[parserIdx].value;

@@ -17,5 +17,18 @@ std::string Utilities::readLuaSrc(std::string filepath) {
         src += line + '\n';
     }
 
+    file.close();
     return src;
+}
+
+void Utilities::writeFile(std::string filepath, std::string content) {
+    std::ofstream file(filepath);
+
+    if (!file) {
+        std::cout << "Error: Failed to write C source file \"" << filepath << "\"!" << std::endl;
+        exit(1);
+    }
+
+    file << content;
+    file.close();
 }
