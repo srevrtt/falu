@@ -7,12 +7,14 @@
 #include "include/cgen.hpp"
 
 int main(int argc, char *argv[]) {
+    // Tokenize Lua code & generate a parse tree
     std::string luaSrc = Utilities::readLuaSrc("tests/hello_world.lua");
     std::vector<Token> tokens = Lexer::tokenize(luaSrc);
     Node parseTree = Parser::parse(tokens);
 
     CGen::generateCSrc(parseTree, "compiled.c");
 
+    // Compile the generated C code
     system("clang -c compiled.c -o compiled.o");
     system("clang compiled.o -o falu_compiled");
     system("rm compiled.c compiled.o");

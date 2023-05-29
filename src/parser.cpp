@@ -6,9 +6,11 @@
 int parserIdx;
 std::vector<Token> tkns;
 
+// Recursively generates a single parse tree node
 static Node genNode() {
     Node node;
 
+    // Try to "understand" what these letters are
     if (tkns[parserIdx].name == "$T_LETTERS") {
         parserIdx++;
 
@@ -41,6 +43,7 @@ static Node genNode() {
     return node;
 }
 
+// Generates a parse tree from the token stream
 Node Parser::parse(std::vector<Token> tokens) {
     tkns = tokens;
     parserIdx = 0;

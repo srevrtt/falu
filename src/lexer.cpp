@@ -6,12 +6,14 @@
 std::string src;
 int idx;
 
+// Skips whitespace
 static void skipWhitespace() {
     while (isspace(src[idx])) {
         idx++;
     }
 }
 
+// Tokenizes a group of letters (includes underscores)
 static std::string tokenizeLetters() {
     std::string letters;
 
@@ -23,6 +25,7 @@ static std::string tokenizeLetters() {
     return letters;
 }
 
+// Tokenizes a string - all it does is reads characters until there is another '"'
 static std::string tokenizeString() {
     std::string str;
     idx++;
@@ -35,6 +38,7 @@ static std::string tokenizeString() {
     return str;
 }
 
+// Tokenizes a Lua source code file
 std::vector<Token> Lexer::tokenize(std::string luaSrc) {
     std::vector<Token> tokens;
 
@@ -44,12 +48,14 @@ std::vector<Token> Lexer::tokenize(std::string luaSrc) {
     skipWhitespace();
 
     while (idx < src.length() - 1) {
-        std::string letters = tokenizeLetters();        
+        // Tokenize any letters first
+        std::string letters = tokenizeLetters();
 
         if (letters.length() > 0) {
             tokens.push_back(Token { "$T_LETTERS", letters });
         }
 
+        // Character tokenization
         if (src[idx] == '(') {
             tokens.push_back(Token { "$T_LPAREN", "(" });
         }
@@ -58,6 +64,7 @@ std::vector<Token> Lexer::tokenize(std::string luaSrc) {
             tokens.push_back(Token { "$T_RPAREN", ")" });
         }
 
+        // String tokenization
         if (src[idx] == '"') {
             std::string str = tokenizeString();
 

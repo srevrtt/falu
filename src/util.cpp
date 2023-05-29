@@ -4,6 +4,7 @@
 
 #include "include/util.hpp"
 
+// Reads a .lua source file
 std::string Utilities::readLuaSrc(std::string filepath) {
     std::ifstream file(filepath);
     std::string src, line;
@@ -21,6 +22,7 @@ std::string Utilities::readLuaSrc(std::string filepath) {
     return src;
 }
 
+// Writes a C source file to the disk
 void Utilities::writeFile(std::string filepath, std::string content) {
     std::ofstream file(filepath);
 
