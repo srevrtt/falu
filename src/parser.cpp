@@ -24,18 +24,13 @@ static Node genNode() {
 
             parserIdx++;
 
+            // Insert all parameters
             while (parserIdx < tkns.size() - 1 && tkns[parserIdx].name != "$T_RPAREN") {
                 Node param;
                 param.name = tkns[parserIdx].value;
                 node.nodes.push_back(param);
 
                 parserIdx++;
-            }
-
-            if (parserIdx < tkns.size() - 1) {
-                Node rparen;
-                rparen.name = ")";
-                node.nodes.push_back(rparen);
             }
         }
     }
@@ -50,7 +45,11 @@ Node Parser::parse(std::vector<Token> tokens) {
 
     Node tree;
     tree.name = "prog";
-    tree.nodes.push_back(genNode());
+
+    while (parserIdx < tkns.size() - 1) {
+        tree.nodes.push_back(genNode());
+        parserIdx++;
+    }
 
     return tree;
 }
