@@ -38,6 +38,18 @@ static std::string tokenizeString() {
     return str;
 }
 
+// Tokenizes an integer and returns it as an std::string
+static std::string tokenizeInteger() {
+    std::string integer;
+
+    while (isdigit(src[idx])) {
+        integer += src[idx];
+        idx++;
+    }
+
+    return integer;
+}
+
 // Tokenizes a Lua source code file
 std::vector<Token> Lexer::tokenize(std::string luaSrc) {
     std::vector<Token> tokens;
@@ -55,6 +67,15 @@ std::vector<Token> Lexer::tokenize(std::string luaSrc) {
             tokens.push_back(Token { "$T_LETTERS", letters });
         }
 
+        // If there aren't any, try to find any numbers and tokenize them
+        if (letters.length() == 0) {
+            std::string integer = tokenizeInteger();
+
+            if (integer.length() > 0) {
+                tokens.push_back(Token { "$T_NUMBER", integer });
+            }
+        }
+
         // Character tokenization
         if (src[idx] == '(') {
             tokens.push_back(Token { "$T_LPAREN", "(" });
@@ -62,6 +83,10 @@ std::vector<Token> Lexer::tokenize(std::string luaSrc) {
 
         if (src[idx] == ')') {
             tokens.push_back(Token { "$T_RPAREN", ")" });
+        }
+
+        if (src[idx] == '=') {
+            tokens.push_back(Token { "$T_EQUALS", "=" });
         }
 
         // String tokenization

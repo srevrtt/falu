@@ -8,7 +8,7 @@
 
 int main(int argc, char *argv[]) {
     // Tokenize Lua code & generate a parse tree
-    std::string luaSrc = Utilities::readLuaSrc("tests/hello_world.lua");
+    std::string luaSrc = Utilities::readLuaSrc("tests/var.lua");
     std::vector<Token> tokens = Lexer::tokenize(luaSrc);
     Node parseTree = Parser::parse(tokens);
 
